@@ -6,6 +6,7 @@ import { useCreditCard } from '@magento/peregrine/lib/talons/CheckoutPage/Paymen
 import { isRequired } from '../../../util/formValidators';
 import Country from '../../Country';
 import Region from '../../Region';
+import Postcode from '../../Postcode';
 import Checkbox from '../../Checkbox';
 import Field from '../../Field';
 import TextInput from '../../TextInput';
@@ -182,6 +183,7 @@ const CreditCard = props => {
                 </div>
                 <div className={billingAddressFieldsClassName}>
                     <Field
+                        id="firstName"
                         classes={fieldClasses.first_name}
                         label={formatMessage({
                             id: 'global.firstName',
@@ -189,12 +191,14 @@ const CreditCard = props => {
                         })}
                     >
                         <TextInput
+                            id="firstName"
                             field="firstName"
                             validate={isFieldRequired}
                             initialValue={initialValues.firstName}
                         />
                     </Field>
                     <Field
+                        id="lastName"
                         classes={fieldClasses.last_name}
                         label={formatMessage({
                             id: 'global.lastName',
@@ -202,6 +206,7 @@ const CreditCard = props => {
                         })}
                     >
                         <TextInput
+                            id="lastName"
                             field="lastName"
                             validate={isFieldRequired}
                             initialValue={initialValues.lastName}
@@ -219,6 +224,7 @@ const CreditCard = props => {
                         }
                     />
                     <Field
+                        id="street1"
                         classes={fieldClasses.street1}
                         label={formatMessage({
                             id: 'global.streetAddress',
@@ -226,12 +232,14 @@ const CreditCard = props => {
                         })}
                     >
                         <TextInput
+                            id="street1"
                             field="street1"
                             validate={isFieldRequired}
                             initialValue={initialValues.street1}
                         />
                     </Field>
                     <Field
+                        id="street2"
                         classes={fieldClasses.street2}
                         label={formatMessage({
                             id: 'global.streetAddress2',
@@ -240,11 +248,13 @@ const CreditCard = props => {
                         optional={true}
                     >
                         <TextInput
+                            id="street2"
                             field="street2"
                             initialValue={initialValues.street2}
                         />
                     </Field>
                     <Field
+                        id="city"
                         classes={fieldClasses.city}
                         label={formatMessage({
                             id: 'global.city',
@@ -252,6 +262,7 @@ const CreditCard = props => {
                         })}
                     >
                         <TextInput
+                            id="city"
                             field="city"
                             validate={isFieldRequired}
                             initialValue={initialValues.city}
@@ -262,20 +273,13 @@ const CreditCard = props => {
                         initialValue={initialValues.region}
                         validate={isFieldRequired}
                     />
-                    <Field
+                    <Postcode
                         classes={fieldClasses.postal_code}
-                        label={formatMessage({
-                            id: 'global.postcode',
-                            defaultMessage: 'ZIP / Postal Code'
-                        })}
-                    >
-                        <TextInput
-                            field="postalCode"
-                            validate={isFieldRequired}
-                            initialValue={initialValues.postalCode}
-                        />
-                    </Field>
+                        validate={isFieldRequired}
+                        initialValue={initialValues.postcode}
+                    />
                     <Field
+                        id="phoneNumber"
                         classes={fieldClasses.phone_number}
                         label={formatMessage({
                             id: 'global.phoneNumber',
@@ -283,6 +287,7 @@ const CreditCard = props => {
                         })}
                     >
                         <TextInput
+                            id="phoneNumber"
                             field="phoneNumber"
                             validate={isFieldRequired}
                             initialValue={initialValues.phoneNumber}

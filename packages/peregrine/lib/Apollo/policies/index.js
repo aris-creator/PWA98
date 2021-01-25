@@ -130,6 +130,9 @@ const typePolicies = {
                     // If there are no cached addresses that's fine - the schema
                     // shows that it is a nullable field.
                 }
+            },
+            orders: {
+                keyArgs: ['filter']
             }
         }
     },
@@ -142,6 +145,28 @@ const typePolicies = {
                 }
             }
         }
+    },
+    CustomerOrders: {
+        fields: {
+            items: {
+                // should this not be the default behavior, and instead go in useOrderHistoryPage
+                // using the useTypePolicies hook?
+                merge: (existing = [], incoming, { variables }) => {
+                    if (variables) {
+                        const { currentPage = 1 } = variables;
+                        // reset cache collection if we're on the first page
+                        if (currentPage === 1) {
+                            return incoming;
+                        }
+                    }
+
+                    return [...existing, ...incoming];
+                }
+            }
+        }
+    },
+    CustomerPaymentTokens: {
+        keyFields: () => 'CustomerPaymentTokens'
     },
     ProductImage: {
         keyFields: ['url']

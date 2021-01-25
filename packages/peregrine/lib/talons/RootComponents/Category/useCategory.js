@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
+import mergeOperations from '../../../util/shallowMerge';
 import { useAppContext } from '../../../context/app';
 import { usePagination } from '../../../hooks/usePagination';
 import { useScrollTopOnChange } from '../../../hooks/useScrollTopOnChange';
@@ -10,6 +11,7 @@ import {
     getFiltersFromSearch,
     getFilterInput
 } from '../../../talons/FilterModal/helpers';
+
 import DEFAULT_OPERATIONS from './category.gql';
 
 /**
@@ -36,9 +38,10 @@ import DEFAULT_OPERATIONS from './category.gql';
 export const useCategory = props => {
     const {
         id,
-        operations = DEFAULT_OPERATIONS,
         queries: { getPageSize }
     } = props;
+
+    const operations = mergeOperations(DEFAULT_OPERATIONS, props.operations);
     const { getCategoryQuery, getFilterInputsQuery } = operations;
 
     const { data: pageSizeData } = useQuery(getPageSize, {
@@ -167,10 +170,10 @@ export const useCategory = props => {
     // If we get an error after loading we should try to reset to page 1.
     // If we continue to have errors after that, render an error message.
     useEffect(() => {
-        if (error && !categoryLoading && currentPage !== 1) {
+        if (error && !categoryLoading && !data && currentPage !== 1) {
             setCurrentPage(1);
         }
-    }, [currentPage, error, categoryLoading, setCurrentPage]);
+    }, [currentPage, error, categoryLoading, setCurrentPage, data]);
 
     // Reset the current page back to one (1) when the search string, filters
     // or sort criteria change.
