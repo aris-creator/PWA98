@@ -11,6 +11,7 @@ import Country from '../../../Country';
 import Field, { Message } from '../../../Field';
 import FormError from '../../../FormError';
 import Region from '../../../Region';
+import Postcode from '../../../Postcode';
 import TextInput from '../../../TextInput';
 import defaultClasses from './guestForm.css';
 import GuestFormOperations from './guestForm.gql';
@@ -87,7 +88,11 @@ const GuestForm = props => {
                             defaultMessage: 'Email'
                         })}
                     >
-                        <TextInput field="email" validate={isRequired} />
+                        <TextInput
+                            field="email"
+                            id="email"
+                            validate={isRequired}
+                        />
                         {guestEmailMessage}
                     </Field>
                 </div>
@@ -99,7 +104,11 @@ const GuestForm = props => {
                             defaultMessage: 'First Name'
                         })}
                     >
-                        <TextInput field="firstname" validate={isRequired} />
+                        <TextInput
+                            field="firstname"
+                            id="firstname"
+                            validate={isRequired}
+                        />
                     </Field>
                 </div>
                 <div className={classes.lastname}>
@@ -110,7 +119,11 @@ const GuestForm = props => {
                             defaultMessage: 'Last Name'
                         })}
                     >
-                        <TextInput field="lastname" validate={isRequired} />
+                        <TextInput
+                            field="lastname"
+                            id="lastname"
+                            validate={isRequired}
+                        />
                     </Field>
                 </div>
                 <div className={classes.country}>
@@ -124,7 +137,11 @@ const GuestForm = props => {
                             defaultMessage: 'Street Address'
                         })}
                     >
-                        <TextInput field="street[0]" validate={isRequired} />
+                        <TextInput
+                            field="street[0]"
+                            id="street0"
+                            validate={isRequired}
+                        />
                     </Field>
                 </div>
                 <div className={classes.street1}>
@@ -136,7 +153,7 @@ const GuestForm = props => {
                         })}
                         optional={true}
                     >
-                        <TextInput field="street[1]" />
+                        <TextInput field="street[1]" id="street1" />
                     </Field>
                 </div>
                 <div className={classes.city}>
@@ -147,22 +164,18 @@ const GuestForm = props => {
                             defaultMessage: 'City'
                         })}
                     >
-                        <TextInput field="city" validate={isRequired} />
+                        <TextInput
+                            field="city"
+                            id="city"
+                            validate={isRequired}
+                        />
                     </Field>
                 </div>
                 <div className={classes.region}>
                     <Region validate={isRequired} />
                 </div>
                 <div className={classes.postcode}>
-                    <Field
-                        id="postcode"
-                        label={formatMessage({
-                            id: 'global.postcode',
-                            defaultMessage: 'ZIP / Postal Code'
-                        })}
-                    >
-                        <TextInput field="postcode" validate={isRequired} />
-                    </Field>
+                    <Postcode validate={isRequired} />
                 </div>
                 <div className={classes.telephone}>
                     <Field
@@ -172,7 +185,11 @@ const GuestForm = props => {
                             defaultMessage: 'Phone Number'
                         })}
                     >
-                        <TextInput field="telephone" validate={isRequired} />
+                        <TextInput
+                            field="telephone"
+                            id="telephone"
+                            validate={isRequired}
+                        />
                     </Field>
                 </div>
                 <div className={classes.buttons}>

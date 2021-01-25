@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { shape, arrayOf, string, number } from 'prop-types';
 
 import { mergeClasses } from '@magento/venia-ui/lib/classify';
@@ -6,26 +6,27 @@ import { mergeClasses } from '@magento/venia-ui/lib/classify';
 import Item from './item';
 
 import defaultClasses from './items.css';
+import { FormattedMessage } from 'react-intl';
 
 const Items = props => {
     const { items, imagesData } = props.data;
     const classes = mergeClasses(defaultClasses, props.classes);
 
-    const mappedImagesData = useMemo(() => {
-        const mappedImagesData = {};
-
-        imagesData.forEach(imageData => {
-            mappedImagesData[imageData.sku] = imageData;
-        });
-
-        return mappedImagesData;
-    }, [imagesData]);
-
     const itemsComponent = items.map(item => (
-        <Item key={item.id} {...item} {...mappedImagesData[item.product_sku]} />
+        <Item key={item.id} {...item} {...imagesData[item.product_sku]} />
     ));
 
-    return <div className={classes.root}>{itemsComponent}</div>;
+    return (
+        <div className={classes.root}>
+            <h3 className={classes.heading}>
+                <FormattedMessage
+                    id="orderItems.itemsHeading"
+                    defaultMessage="Items"
+                />
+            </h3>
+            <div className={classes.itemsContainer}>{itemsComponent}</div>
+        </div>
+    );
 };
 
 export default Items;
@@ -39,8 +40,12 @@ Items.propTypes = {
             shape({
                 id: string,
                 product_name: string,
-                product_sale_price: string,
+                product_sale_price: shape({
+                    currency: string,
+                    value: number
+                }),
                 product_sku: string,
+                product_url_key: string,
                 selected_options: arrayOf(
                     shape({
                         label: string,
