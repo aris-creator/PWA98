@@ -11,7 +11,9 @@ const config = require('./config');
 const createClassDocs = require('./createClassDocs');
 const createFunctionDocs = require('./createFunctionDocs');
 
-const docsProjectRoot = process.cwd();
+const docsProjectRoot = path.join(__dirname,'..','..');
+
+console.log("Docs Project Root: "+docsProjectRoot);
 
 config.files.forEach(file => {
     let { target, overrides, type, childComponents: children = [] } = file;
@@ -70,9 +72,9 @@ const writeToFile = (fileDestination, fileContent) => {
                 path.relative(docsProjectRoot, fileDestination)
         );
 
-        fs.mkdirSync(path.dirname(fileDestination), { recursive: true });
+        //fs.mkdirSync(path.dirname(fileDestination), { recursive: true });
 
-        fs.writeFileSync(fileDestination, fileContent);
+        //fs.writeFileSync(fileDestination, fileContent);
     } else {
         console.error('> Skipping empty file content for', target);
     }
