@@ -20,7 +20,8 @@ module.exports = targets => {
             esModules: true,
             graphqlQueries: true,
             rootComponents: true,
-            upward: true
+            upward: true,
+            i18n: true
         };
     });
 
@@ -54,7 +55,7 @@ module.exports = targets => {
      * and the path to the routes component, you can just push route
      * requests into a neat little array.
      */
-    builtins.transformModules.tap(addTransform => {
+    builtins.transformModules.tapPromise(async addTransform => {
         addTransform({
             type: 'babel',
             fileToTransform:
@@ -62,7 +63,7 @@ module.exports = targets => {
             transformModule:
                 '@magento/venia-ui/lib/targets/BabelRouteInjectionPlugin',
             options: {
-                routes: targets.own.routes.call([])
+                routes: await targets.own.routes.promise([])
             }
         });
     });
@@ -70,12 +71,18 @@ module.exports = targets => {
     // The paths below are relative to packages/venia-ui/lib/components/Routes/routes.js.
     targets.own.routes.tap(routes => [
         ...routes,
-        // {
-        //     name: 'AddressBook',
-        //     pattern: '/address-book',
-        //     exact: true,
-        //     path: '../AddressBookPage'
-        // },
+        {
+            name: 'AccountInformationPage',
+            pattern: '/account-information',
+            exact: true,
+            path: '../AccountInformationPage'
+        },
+        {
+            name: 'AddressBook',
+            pattern: '/address-book',
+            exact: true,
+            path: '../AddressBookPage'
+        },
         {
             name: 'Cart',
             pattern: '/cart',
@@ -100,12 +107,12 @@ module.exports = targets => {
             exact: true,
             path: '../CreateAccountPage'
         },
-        // {
-        //     name: 'OrderHistory',
-        //     pattern: '/order-history',
-        //     exact: true,
-        //     path: '../OrderHistoryPage'
-        // },
+        {
+            name: 'OrderHistory',
+            pattern: '/order-history',
+            exact: true,
+            path: '../OrderHistoryPage'
+        },
         {
             /**
              * This path is configured in the forgot password
@@ -117,16 +124,22 @@ module.exports = targets => {
             path: '../MyAccount/ResetPassword'
         },
         {
+            name: 'SavedPayments',
+            pattern: '/saved-payments',
+            exact: true,
+            path: '../SavedPaymentsPage'
+        },
+        {
             name: 'Search',
             pattern: '/search.html',
             exact: true,
             path: '../../RootComponents/Search'
+        },
+        {
+            name: 'WishlistPage',
+            pattern: '/wishlist',
+            exact: true,
+            path: '../WishlistPage'
         }
-        // {
-        //     name: 'WishlistPage',
-        //     pattern: '/wishlist',
-        //     exact: true,
-        //     path: '../WishlistPage'
-        // }
     ]);
 };
